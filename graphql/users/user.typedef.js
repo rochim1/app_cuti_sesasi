@@ -3,6 +3,12 @@ const typeDef = `
         m
         f
     }
+    
+    enum rolesEnum{
+        admin
+        verifikator
+        ordinary
+    }
 
     enum EnumEmployStatus{
         permanent
@@ -76,8 +82,7 @@ const typeDef = `
         _ids: [ID]
         status: statusUser
         name: String
-        divisi_id: ID
-        tipe: EnumEmployStatus
+        employ_status: EnumEmployStatus
         gender: String
     }
 
@@ -88,17 +93,16 @@ const typeDef = `
 
     input UserInput{
         no_identitas: String
+        role: rolesEnum
         name: String!
-        username: String!
+        tipe_identitas: TipeIdentitas
+        username: String
         gender: genders
-        email: String!
+        email: String
         password: String
-        user_type_id: ID
-        divisi: ID
         jabatan: String
-        level: String
+        divisi: String
         remember_token: String
-        identity_type: ID
         address: String
         domisili: String
         pos_code: String
@@ -111,7 +115,6 @@ const typeDef = `
         telp_number: String
         date_join: String
         date_resign: String
-        is_admin: Boolean
         additional_contact: [AdditionalContactInput]
         deleted_at: String
         delete_reason: String
@@ -124,40 +127,10 @@ const typeDef = `
         employ_status: EnumEmployStatus
     }
 
-    input UserUpdateInput {
-        no_identitas: String
-        name: String
-        username: String
-        gender: genders
-        email: String
-        password: String
-        jabatan: String
-        level: String
-        remember_token: String
-        address: String
-        domisili: String
-        pos_code: String
-        url_foto: Upload
-        status_menikah: EnumStatusMenikah
-        pendidikan_terakhir: String
-        jurusan: String
-        place_of_birth: String
-        date_of_birth: String
-        telp_number: String
-        date_join: String
-        date_resign: String
-        is_admin: Boolean
-        additional_contact: [AdditionalContactInput]
-        deleted_at: String
-        delete_reason: String
-        resign_reason: String
-        kecamatan: String
-        kabupaten: String
-        kelurahan: String
-        provinsi: String
-        keterangan: String
-        isFotoDeleted: Boolean
-        employ_status: EnumEmployStatus
+    enum TipeIdentitas {
+        sim
+        ktp
+        pasport
     }
 
     input LoginInput{
@@ -171,18 +144,20 @@ const typeDef = `
 
     input exportUsersInput {
         user_ids: [ID]
-        delimiter: enumdelimiter
+        delimiter: enumDelimiter
         offset: Int
     }
 
-    enum enumdelimiter{
+    enum enumDelimiter{
         semicolon
         comma
     }    
 
     type User{
         _id: ID
+        tipe_identitas: String
         no_identitas: String
+        role: rolesEnum
         name: String
         username: String
         gender: genders
@@ -197,7 +172,6 @@ const typeDef = `
         place_of_birth: String
         date_of_birth: String
         telp_number: String
-        manager_id: ID
         date_join: String
         date_resign: String
         status: statusUser
@@ -218,8 +192,6 @@ const typeDef = `
         kelurahan: String
         provinsi: String
         keterangan: String
-        jam_masuk_divisi: String,
-        jam_pulang_divisi: String
         employ_status: EnumEmployStatus
     }
 
@@ -277,27 +249,12 @@ const typeDef = `
     extend type Query {
         GetAllUser(filter: FilterUser, sorting: SortingUser, pagination: pagination): resultUsers
         GetOneUser(_id: ID): User
-        GetTotalUser: TotalUser
-        GetOneUserForInventaris(_id: ID, id_inventaris: ID): User
-        GetProfileImage(_id: ID): ProfileImage
-        GetGenderDiversity( filter: filterUserDiversity ): resultGenderDiversity
-        GetEmployDiversity( filter: filterUserDiversity ): resultEmployDiversity
     }
 
     extend type Mutation {
-        CreateUserByAdmin(input: UserInput, foto: Upload): User
         CreateUser(input: UserInput): User
+        UpdateUser(id_user: ID, input: UserInput): User
         Login(input: LoginInput): Authentication
-        UpdateProfile(input: UserUpdateInput, _id: ID): BooleanResponse
-        DeleteUser(_id: ID, reason: String, is_resign: Boolean): BooleanResponse
-        AddContact(input: [AdditionalContactInput], _id:ID): BooleanResponse
-        Logout: BooleanResponse
-        RequestChangePassword(_id: ID, email: String, is_web: Boolean, new_password: String): changePassword
-        RequestChangePasswordWeb(_id: ID): changePassword
-        UploadImage(file: Upload!): File!
-        ImportUser(file: Upload!): [User]
-        exportUsers(input: exportUsersInput): ExportResult
-        checkUserByEmail(emailOrUsername: String): User
     }
 `;
 

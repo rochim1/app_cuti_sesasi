@@ -281,7 +281,7 @@ const UpdateCuti = async (parent, { input, cuti_id, file }, ctx) => {
 };
 
 const UpdatePengaturanCuti = async function (parent, { input }, ctx) {
-    
+
 }
 
 const DeleteCuti = async (parent, { cuti_id }, ctx) => {

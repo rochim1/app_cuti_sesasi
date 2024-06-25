@@ -3,8 +3,12 @@ let Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   user_code: String,
-  no_identitas: {
+  username: {
     type: String,
+    required: [true, "Username wajib disertakan"],
+    minLength: [3, "min length is 3"],
+    trim: false,
+    unique: [true, "username already used"]
   },
   name: {
     type: String,
@@ -12,12 +16,18 @@ const userSchema = new Schema({
     minLength: [3, "min length is 3"],
     trim: false,
   },
-  username: {
+  tipe_identitas: {
     type: String,
-    required: [true, "Username wajib disertakan"],
-    minLength: [3, "min length is 3"],
-    trim: false,
-    unique: [true, "username already used"]
+    enum: ["ktp", "sim", "pasport"],
+  },
+  no_identitas: {
+    type: String,
+  },
+  role: {
+    type: String,
+    required: [true, "Role wajib disertakan"],
+    enum: ["admin", "verifikator", "ordinary"],
+    default: "ordinary"
   },
   gender: {
     type: String,
@@ -42,10 +52,6 @@ const userSchema = new Schema({
   remember_token: {
     type: String,
   },
-  identity_type: {
-    type: Schema.Types.ObjectId,
-    ref: "identity",
-  },
   address: {
     type: String,
   },
@@ -67,14 +73,6 @@ const userSchema = new Schema({
   telp_number: {
     type: String,
   },
-  instansi_id: {
-    type: Schema.Types.ObjectId,
-    ref: "instansi",
-  },
-  manager_id: {
-    type: Schema.Types.ObjectId,
-    ref: "user",
-  },
   date_join: {
     type: String,
   },
@@ -88,10 +86,6 @@ const userSchema = new Schema({
     address: String,
     email: String
   }],
-  is_admin: {
-    type: Boolean,
-    default: false
-  },
   status: {
     type: String,
     enum: ['active', 'deleted', 'resign'],
@@ -111,34 +105,9 @@ const userSchema = new Schema({
   mac_address: {
     type: String
   },
-  status_histories: [{
-    status: String,
-    date_join: String,
-    date_resign: String,
-    update_status_to: String,
-    updated_date: String,
-    updated_time: String,
-    reason: String,
-    user_who_updated: {
-      type: Schema.Types.ObjectId,
-      ref: "user",
-    },
-  }],
-  is_presensi_today: {
-    type: Boolean,
-    default: false
-  },
   is_cuti: {
     type: Boolean,
     default: false
-  },
-  sisa_cuti: {
-    type: Number,
-    default: 12
-  },
-  inventaris_kendaraan_id: {
-    type: Schema.Types.ObjectId,
-    ref: 'cycle'
   },
   kecamatan: {
     type: String,
@@ -166,23 +135,8 @@ const userSchema = new Schema({
     type: String,
     enum: ["belum_kawin", "kawin", "cerai_hidup", "cerai_mati"]
   },
-  change_tkn: {
-    type: String
-  },
-  device_tkn: {
-    type: String
-  },
-  temp_psw: {
-    type: String
-  },
-  allow_change_pw_after: {
-    type: String
-  },
-  need_logout: {
-    type: Boolean
-  },
   date_request_change_pw: [{
-    //untuk preventiv user tidak dapat update password dalam sehari lebih dari tiga kali
+    //untuk preventif user tidak dapat update password dalam sehari lebih dari tiga kali
     type: String
   }],
   password_history: [{

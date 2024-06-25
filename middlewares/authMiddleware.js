@@ -53,9 +53,10 @@ const auth = async (res, parent, args, ctx) => {
 
 module.exports = {
     Query: {
-        
+        GetAllUser: auth,
     },
     Mutation: {
-        
+        CreateUser: auth,
+        UpdateUser: auth,
     }
 }
