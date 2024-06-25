@@ -5,8 +5,6 @@ const {
 } = require("graphql");
 const CutiBillingUtillities = require('./cuti_billings.utilities')
 const common = require('../../utils/common');
-const settingModel = require('../setting/setting.model');
-const NotifikasiUtilities = require('../notifikasi/notifikasi.utilities');
 const mongoose = require('mongoose')
 const ObjectId = mongoose.Types.ObjectId
 const UserModel = require("../users/user.model")

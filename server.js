@@ -30,8 +30,6 @@ const mongoose = require("mongoose");
 const httpCreate = require("http");
 const dotenv = require("dotenv");
 const app = require('./express/index');
-const cronUtilities = require('./graphql/cron/cron.utilities');
-const NotifikasiUtilities = require('./graphql/notifikasi/notifikasi.utilities');
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
@@ -72,44 +70,8 @@ mongoose
 //   .catch((err) => console.log("Database disconnected", err));
 const cron = require("node-cron");
 async function startCron() {
-  const instansiModel = require('./graphql/instansi/instansi.model');
+  
 
-  const getInstansi = await instansiModel.find({
-    status: 'active'
-  }).select('_id')
-  const instansiId = []
-  if (getInstansi && getInstansi.length) {
-    for (const {
-        _id
-      } of getInstansi) {
-      instansiId.push(_id)
-    }
-  }
-
-  for (let _id of instansiId) {
-    _id = _id.toString()
-
-    cronUtilities.listCronJobs.map(({
-      trigger_name,
-      trigger_date,
-      func
-    }) => {
-      if (!cronUtilities.listCronJobsBlocked.includes(trigger_name)) {
-        if (func && func.length) {
-          for (const funct of func) {
-            console.log(`${funct} cron ready`)
-            cron.schedule(trigger_date, async () => {
-              cronUtilities[funct](trigger_name, _id)
-            })
-          }
-        }
-      }
-    })
-
-    await NotifikasiUtilities.StartingWorkNotif(_id);
-    await NotifikasiUtilities.EndWorkNotif(_id);
-    await NotifikasiUtilities.RestWorkNotif(_id);
-  }
 }
 
 async function startApolloServer() {

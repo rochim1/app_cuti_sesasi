@@ -141,18 +141,7 @@ const Logout = async (parent, args, ctx) => {
   });
 
   if (logoutUser) {
-    await firebaseModel.findOneAndUpdate({
-      user_id: ctx.user._id,
-      status: 'active'
-    }, {
-      $set: {
-        status: 'deleted'
-      }
-    })
-
-    await BlacklistModel.create({
-      auth_token: ctx.token
-    })
+    
     return {
       is_successed: true,
       message: `Berhasil logout`
@@ -867,7 +856,6 @@ module.exports = {
     GetOneUser,
     GetAllUser,
     GetProfileImage,
-    GetOneUserForInventaris,
     GetGenderDiversity,
     GetEmployDiversity
   },
@@ -875,16 +863,13 @@ module.exports = {
     CreateUserByAdmin,
     CreateUser,
     Login,
-    UpdateProfile,
     DeleteUser,
-    AddContact,
     Logout,
     RequestChangePassword,
     RequestChangePasswordWeb,
     UploadImage,
     ImportUser,
     exportUsers,
-    ActiveUser,
     checkUserByEmail
   },
 };

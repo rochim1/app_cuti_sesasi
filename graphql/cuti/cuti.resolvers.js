@@ -5,8 +5,6 @@ const CutiUtilities = require('./cuti.utilities')
 const UserUtilities = require("../users/user.utilities");
 const UserModel = require('../users/user.model');
 const common = require('../../utils/common');
-const SettingModel = require('../setting/setting.model');
-const NotifikasiUtilities = require('../notifikasi/notifikasi.utilities');
 
 //***** Query*/  
 const GetAllCuti = async function (parent, { filter, pagination }, ctx){
@@ -106,27 +104,8 @@ const GetOneCuti = async function (parent, { cuti_id }, ctx){
     return getCuti;
 }
 
-const GetPengaturanCuti = async function (parent, params, ctx){
-    let instansi_id = ctx.user.instansi_id;
+const GetPengaturanCuti = async function (parent, params, ctx) {
 
-    if (!instansi_id) throw new GraphQLError("instansi_id tidak ada, hubungi tim pengembang", {
-        extensions: { code: "BAD_REQUEST", http: { status: 400 } },
-    });
-
-    let pengaturanCuti = await SettingModel.findOne({ instansi_id: instansi_id, status: 'active' }).select('_id pengaturan_cuti').lean();
-
-    if (!pengaturanCuti) {
-        throw new GraphQLError('pengaturan cuti tidak ditemukan', {
-            extensions: { code: "NOT_FOUND", http: { status: 404 } },
-        });
-    }
-
-    pengaturanCuti = {
-        ...pengaturanCuti.pengaturan_cuti,
-        setting_id: pengaturanCuti._id
-    }
-
-    return pengaturanCuti;
 }
 
 //***** Mutation create cuti by pegawai*/ 
@@ -174,13 +153,7 @@ const CreateCuti = async function (parent, { input, file }, ctx) {
 
         cuti = await CutiModel.create(input);
 
-        await NotifikasiUtilities.adminAddNewTaskNotif(
-            'notifikasi_cuti_diajukan', 
-            'Anda berhasil membuat Izin kerja, tunggu hingga di setujui oleh Penanggung Jawab.', 
-            cuti.user_id, 
-            null,
-            null,
-        )
+        
 
         if (filePath) {
             await UserUtilities.deleteImages(filePath);
@@ -231,13 +204,7 @@ const CreateCuti = async function (parent, { input, file }, ctx) {
 
         let text = input.status_izin === 'diterima' ? 'Selamat, Izin kerja Anda berhasil di setujui oleh Penanggung Jawab, silahkan periksa kembali.' : 'Maaf, Izin kerja Anda ditolak oleh Penanggung Jawab, silahkan periksa kembali.';
 
-        await NotifikasiUtilities.adminAddNewTaskNotif(
-            input.status_izin === 'diterima' ? 'notifikasi_cuti_diterima' : 'notifikasi_cuti_ditolak', 
-            text, 
-            cuti.user_id, 
-            null,
-            null,
-        )
+        
     }
 
 
@@ -313,41 +280,8 @@ const UpdateCuti = async (parent, { input, cuti_id, file }, ctx) => {
     return cutiUpdate
 };
 
-const UpdatePengaturanCuti = async function (parent, { input }, ctx){
-    let instansi_id = ctx.user.instansi_id;
-    if (!instansi_id) throw new GraphQLError("instansi_id tidak ada, hubungi tim pengembang", {
-        extensions: { code: "BAD_REQUEST", http: { status: 400 } },
-    });
-
-    let settingId;
-    let pengaturanCuti;
-    if (input.setting_id) {
-        settingId = input.setting_id;
-    } else {
-        pengaturanCuti = await SettingModel.findOne({ instansi_id: instansi_id, status: 'active' }).select('_id pengaturan_cuti').lean();
-        settingId = pengaturanCuti._id
-    }
+const UpdatePengaturanCuti = async function (parent, { input }, ctx) {
     
-    if (!pengaturanCuti) {
-        pengaturanCuti = await SettingModel.findOne({ _id: settingId, status: 'active' }).select('_id pengaturan_cuti').lean();
-    }
-    
-    if (!pengaturanCuti) {
-        throw new GraphQLError('pengaturan cuti tidak ditemukan', {
-            extensions: { code: "NOT_FOUND", http: { status: 404 } },
-        });
-    }
-
-    // pengaturan telah ditemukan lanjutkan ke update
-
-    let objectToUpdate = {
-        ...input
-    }
-    
-    pengaturanCuti = await SettingModel.findOneAndUpdate({ _id: settingId }, { $set: { pengaturan_cuti: objectToUpdate }}, { new: true }).select('_id pengaturan_cuti') 
-
-    pengaturanCuti.setting_id  = pengaturanCuti._id
-    return pengaturanCuti;
 }
 
 const DeleteCuti = async (parent, { cuti_id }, ctx) => {

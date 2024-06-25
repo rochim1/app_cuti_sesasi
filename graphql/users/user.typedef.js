@@ -109,8 +109,6 @@ const typeDef = `
         place_of_birth: String
         date_of_birth: String
         telp_number: String
-        instansi_id: ID
-        manager_id: ID
         date_join: String
         date_resign: String
         is_admin: Boolean
@@ -133,7 +131,6 @@ const typeDef = `
         gender: genders
         email: String
         password: String
-        divisi: ID
         jabatan: String
         level: String
         remember_token: String
@@ -190,7 +187,6 @@ const typeDef = `
         username: String
         gender: genders
         email: String
-        identity_type: TipeIdentitas
         address: String
         domisili: String
         pos_code: String
@@ -201,7 +197,6 @@ const typeDef = `
         place_of_birth: String
         date_of_birth: String
         telp_number: String
-        instansi_id: Instansi
         manager_id: ID
         date_join: String
         date_resign: String
@@ -231,15 +226,14 @@ const typeDef = `
     type Authentication{
         token: String
         user: User
-        permission: Permission
     }
 
     type changePassword{
         message: String
     }
 
-    type gettingUser {
-        users: [User]
+    type resultUsers {
+        data: [User]
         info_page: [countPages]
     }
 
@@ -271,8 +265,17 @@ const typeDef = `
         total_magang: Int
     }
 
+    input pagination {
+        page: Int
+        limit: Int
+    }
+
+    type countPages {
+        count: Int
+    }
+
     extend type Query {
-        GetAllUser(filter: FilterUser, sorting: SortingUser, pagination: pagination): gettingUser
+        GetAllUser(filter: FilterUser, sorting: SortingUser, pagination: pagination): resultUsers
         GetOneUser(_id: ID): User
         GetTotalUser: TotalUser
         GetOneUserForInventaris(_id: ID, id_inventaris: ID): User
@@ -294,7 +297,6 @@ const typeDef = `
         UploadImage(file: Upload!): File!
         ImportUser(file: Upload!): [User]
         exportUsers(input: exportUsersInput): ExportResult
-        ActiveUser(_id: ID): BooleanResponse
         checkUserByEmail(emailOrUsername: String): User
     }
 `;
