@@ -1,0 +1,14 @@
+{
+    "Marketing" : "marketing",
+    "Kurir": "courier",
+    "Manager Operasional": "operational_manager",
+    "Staff Gudang": "warehouse_staff",
+    "Apoteker Penanggung Jawab - APJ Alkes": "apj_alkes",
+    "Apoteker": "apoteker",
+    "Staff Admin": "admin_staff",
+    "Direktur": "director",
+    "Staff IT":"it_staff",
+    "Staff Perpajakkan":"tax_staff",
+    "Owner": "owner",
+    "Akuntansi": "accounting"
+}

@@ -1,0 +1,50 @@
+{
+    "divisi": {
+        "ind": {
+            "MARKETING": "Marketing",
+            "COURIER": "Kurir",
+            "OPERATIONAL_MANAGER": "Manager Operasional",
+            "WAREHOUSE_STAFF": "Staff Gudang",
+            "APJ_ALKES": "APJ Alkes",
+            "APOTEKER": "Apoteker",
+            "ADMIN_STAFF": "Staff Admin",
+            "DIRECTOR": "Direktur",
+            "IT_STAFF": "Staff IT",
+            "TAX_STAFF": "Staff Perpajakan",
+            "OWNER": "Owner",
+            "ACCOUNTING": "Akuntansi"
+        }
+    },
+    "attendance_place": {
+        "ind": {
+            "ARROUND_OFFICE": "di kantor",
+            "ARROUND_OUTLET": "di kantor / outlet",
+            "EVERYWHERE": "di mana saja"
+        }
+    },
+    "dayoff_type": {
+        "ind": {
+            "BURNED_ANNUALLY": "hangus pertahun",
+            "ACCUMULATE_ANNUALLY": "akumulasi pertahun"
+        }
+    },
+    "user_type": {
+        "ind": {
+            "PERMANENT": "permanen",
+            "CONTRACT": "kontrak",
+            "PROBATION": "percobaan",
+            "APPRENTICESHIP": "magang"
+        }
+    },
+    "nama_hari": {
+        "ind": {
+            "MONDAY": "Senin",
+            "TUESDAY": "Selasa",
+            "WEDNESDAY": "Rabu",
+            "THURSDAY": "Kamis",
+            "FRIDAY": "Jumat",
+            "SATURDAY": "Sabtu",
+            "SUNDAY": "Minggu"
+        }
+    }
+}

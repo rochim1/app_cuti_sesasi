@@ -1,0 +1,4 @@
+.env
+node_modules
+graphql_errors.log
+package-lock.json
