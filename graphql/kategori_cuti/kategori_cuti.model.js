@@ -18,37 +18,25 @@ const kategoriCutiSchema = new Schema({
   jumlah_kuota_hari: { type: Number }, // per user
   sugested_day_off: { type: Number }, 
   allow_half_day: { type: Boolean },
-  allow_exceed: { type: Boolean },
-  number_of_exceed: { type: Number },
   keterangan: { type: String },
-  delegated_to_all: { type: Boolean},
   need_upload_file: { type: Boolean, default: false},
   allow_min_gap: { type: Boolean},
   min_gap_before_cuti: { type: Number},
+  delegated_to_all: { type: Boolean},
   selected_delegated: [{ 
     type: String,
     enum: ['permanent', 'contract', 'probation', 'apprenticeship'],
     default: 'all'
   }],
-  delegated_to_all_divisi: { type: Boolean},
-  selected_delegated_divisi : [{
-    type: Schema.Types.ObjectId,
-    ref: "divisi",
-  }],
   selected_users: [{
     type: Schema.Types.ObjectId,
     ref: "user",
   }],
-  instansi_id: {
-    type: Schema.Types.ObjectId,
-    ref: "instansi",
-  },
   status: {
     type: String,
     enum: [ 'active', 'inactive', 'deleted' ],
     default: 'active'
   },
-  is_special: { type: Boolean },
   deleted_at: { type: String }
 }, {
   timestamps: true

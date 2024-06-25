@@ -17,7 +17,7 @@ const typeDefs = [
     users.typeDef,
     // wilayah.typeDef,
     // cuti.typeDef,
-    // kategoriCuti.typeDef,
+    kategoriCuti.typeDef,
     // cutiBillings.typeDef,
 ];
 
@@ -30,7 +30,7 @@ resolvers = merge(
     users.resolvers,
     // wilayah.resolvers,
     // cuti.resolvers,
-    // kategoriCuti.resolvers,
+    kategoriCuti.resolvers,
     // cutiBillings.resolvers,
 );
 
@@ -39,6 +39,6 @@ module.exports = {
     resolvers,
     userLoader: users.UserLoader,
     // cutiLoader: cuti.CutiLoader,
-    // kategoriCutiLoader: kategoriCuti.kategoriCutiLoader,
+    kategoriCutiLoader: kategoriCuti.kategoriCutiLoader,
     // cutiBillingsLoader: cutiBillings.CutiBillingsLoader,
 };

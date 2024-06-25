@@ -51,12 +51,10 @@ const GetAllKategoriCutiResponsible = async function (parent, {
 }, ctx) {
     const user_id = ctx.user._id;
     const user_tipe = ctx.user.employ_status;
-    const instansi_id = ctx.user.instansi_id;
 
     let aggregateQuery = [];
     let aggregateQueryFilter = {
         status: filter && filter.status ? filter.status : 'active',
-        instansi_id: instansi_id,
         $or: [{
                 selected_users: {
                     $eq: new ObjectId(user_id)
@@ -179,9 +177,8 @@ const GetOneKategoriCuti = async function (parent, {
 const CheckAvaliableKategoriCutiName = async function (parent, {
     nama_kategori_cuti, exception_ids
 }, ctx) {
-    const instansi_id = ctx.user.instansi_id;
+    
     let findObject = {
-        instansi_id: instansi_id,
         status: {
             $ne: "deleted"
         },
@@ -227,12 +224,9 @@ const CreateKategoriCuti = async function (parent, {
     }
 
     const user_id = ctx.user._id;
-    const instansi_id = ctx.user.instansi_id;
-
     input = {
         ...input,
         user_created: user_id,
-        instansi_id: instansi_id
     }
 
     const newKategoriCuti = new KategoriCutiModel(input);
@@ -497,18 +491,6 @@ const selectedUserLoader = async (parent, args, ctx) => {
     }
 }
 
-const selectedDivisiLoader = async (parent, args, ctx) => {
-    try {
-        if (parent && parent.selected_delegated_divisi && parent.selected_delegated_divisi.length) {
-            return parent.selected_delegated_divisi.map(async (data) => {
-                return await ctx.divisiLoader.load(data._id)
-            });
-        }
-    } catch (error) {
-        console.log('loader selectedDivisiLoader error')
-    }
-  };
-
 module.exports = {
     Query: {
         GetAllKategoriCuti,
@@ -527,6 +509,5 @@ module.exports = {
     KategoriCuti: {
         user_created: userLoader,
         selected_users: selectedUserLoader,
-        selected_delegated_divisi: selectedDivisiLoader,
     },
 }

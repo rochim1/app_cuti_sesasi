@@ -255,6 +255,7 @@ const typeDef = `
         CreateUser(input: UserInput): User
         UpdateUser(id_user: ID, input: UserInput): User
         Login(input: LoginInput): Authentication
+        Logout: BooleanResponse
     }
 `;
 

@@ -30,13 +30,10 @@ const kategoriCutiTypeDefs = `
     selected_delegated: [EnumEmployStatus]
     selected_users: [User]
 
-    instansi_id: ID
     status: StatusKategoriCuti
     
     allow_min_gap: Boolean
     min_gap_before_cuti: Int
-    delegated_to_all_divisi: Boolean
-    selected_delegated_divisi: [Divisi]
 
     deleted_at: String
     createdAt: String
@@ -62,13 +59,10 @@ const kategoriCutiTypeDefs = `
     selected_delegated: [EnumEmployStatus]
     selected_users: [ID]
 
-    instansi_id: ID
     status: StatusKategoriCuti
 
     allow_min_gap: Boolean
     min_gap_before_cuti: Int
-    delegated_to_all_divisi: Boolean
-    selected_delegated_divisi: [ID]
 
     deleted_at: String
   }
@@ -90,13 +84,17 @@ const kategoriCutiTypeDefs = `
 
   input exportKategoriCutiInput {
     kategoriCuti_ids: [ID]
-    delimiter: enumdelimiter
+    delimiter: enumDelimiter
     offset: Int
 }
 
   type GettingKategoriCuti {
     kategoriCuti: [KategoriCuti]
     info_page: [countPages]
+  }
+
+  type getIds{
+    ids: [ID]
   }
   
   type Query {
