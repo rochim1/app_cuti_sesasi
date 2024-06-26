@@ -7,6 +7,7 @@ const cutiTypeDefs = `
         status_izin: EnumAksi
         tanggal_aksi: String 
         aktor_aksi: User
+        terhitung_hari: String
         is_response_by_admin: Boolean
         tanggal_izin: String
         tanggal_masuk: String
@@ -38,6 +39,7 @@ const cutiTypeDefs = `
         tanggal_aksi: String 
         tanggal_izin: String
         tanggal_masuk: String
+        terhitung_hari: String
     }
 
     input FilterAllCuti {
@@ -55,42 +57,15 @@ const cutiTypeDefs = `
         message: String
     }
 
-    input InputPengaturanCuti {
-        quota_cuti: Int
-        accumulate_month: Int
-        max_cuti_accumulate: Int
-        max_cuti_req: Int
-        min_cuti_req: Int
-        cuti_approver: [ID]
-        is_need_all_approver: Boolean
-        forward_divisi_user: Boolean
-        forward_selected_divisi: [ID]
-    }
-    
-    type PengaturanCutiType {
-        setting_id: ID
-        quota_cuti: Int
-        accumulate_month: Int
-        max_cuti_accumulate: Int
-        max_cuti_req: Int
-        min_cuti_req: Int
-        cuti_approver: [User]
-        is_need_all_approver: Boolean
-        forward_divisi_user: Boolean
-        forward_selected_divisi: [Divisi]
-    }
-
     extend type Query {
         GetAllCuti(filter: FilterAllCuti, pagination: pagination): gettingCuti
         GetOneCuti(cuti_id: ID!): Cuti
-        GetPengaturanCuti: PengaturanCutiType
     }
     
     extend type Mutation {
         CreateCuti(input: CutiInput, file: Upload): Cuti
         UpdateCuti(cuti_id: ID!, input: CutiInput, file: Upload): Cuti
         DeleteCuti(cuti_id: ID!): Cuti
-        UpdatePengaturanCuti(pengaturan_id: ID, input: InputPengaturanCuti): PengaturanCutiType
     }
 `
 module.exports = cutiTypeDefs;

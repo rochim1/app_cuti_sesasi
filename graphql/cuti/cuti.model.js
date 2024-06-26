@@ -7,7 +7,8 @@ const cutiSchema = new Schema({
     ref: "user",
   },
   tipe_cuti: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: "kategori_cuti",
   },
   alasan: {
     type: String,
@@ -21,9 +22,6 @@ const cutiSchema = new Schema({
     type: String,
     enum: ['diterima', 'ditolak', 'diajukan']
   },
-  filename: {
-    type: String
-  },
   tanggal_aksi: {
     type: String,
     default: ''
@@ -31,14 +29,6 @@ const cutiSchema = new Schema({
   aktor_aksi: {
     type: Schema.Types.ObjectId,
     ref: "user",
-  },
-  instansi_id: {
-    type: Schema.Types.ObjectId,
-    ref: "instansi",
-  },
-  is_response_by_admin: {
-    type: Boolean,
-    default: false
   },
   tanggal_izin: {
     type: String,
@@ -48,6 +38,7 @@ const cutiSchema = new Schema({
     type: String,
     default: ''
   },
+  terhitung_hari: String,
   file_izin: {
     type: String,
     default: ''

@@ -1,17 +1,5 @@
-const userModel = require("./user.model");
-const nodemailer = require("nodemailer");
-const { hash, compare } = require("bcrypt");
 const UserUtilities = require("./user.utilities");
-const jwt = require("jsonwebtoken");
-const { validateEmail } = require("filter-validate-email");
-const moment = require("moment");
-const common = require("../../utils/common");
 const { GraphQLError } = require("graphql");
-const handlebars = require("handlebars");
-const fs = require("fs");
-const _ = require("lodash");
-const translationJSON = require("../../utils/translate/translationJSON.json");
-const { CutiBillingsModel } = require("../cuti_billings");
 const { UserModel } = require(".");
 
 /**
@@ -56,20 +44,7 @@ const Login = async (parent, { input }, ctx) => {
 
 const GetOneUser = async (parent, { _id }, ctx) => {
   try {
-    if (!_id) {
-      throw new GraphQLError(`wajib masukan _id, ${error}`, {
-        extensions: { code: "BAD_REQUEST", http: { status: 400 } },
-      });
-    }
-
-    let user = await UserModel.findOne({ _id: _id });
-    if (!user) {
-      throw new GraphQLError(`user tidak ditemukan, ${error}`, {
-        extensions: { code: "BAD_REQUEST", http: { status: 400 } },
-      });
-    }
-
-    return user
+    return await UserUtilities.GetOneUser(_id)
   } catch (error) {
     throw new GraphQLError(`Error, ${error}`, {
       extensions: {

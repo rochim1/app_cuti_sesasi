@@ -42,4 +42,4 @@ const kategoriCutiSchema = new Schema({
   timestamps: true
 })
 
-module.exports = mongoose.model('Kategori_cuti', kategoriCutiSchema)
+module.exports = mongoose.model('kategori_cuti', kategoriCutiSchema)

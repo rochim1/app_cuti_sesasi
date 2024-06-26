@@ -21,6 +21,12 @@ function generateToken(user, expires) {
   return token;
 };
 
+/**
+ * generate customed remember me token / but its not used now
+ *
+ * @param {*} length
+ * @return {*} 
+ */
 const remember_me = (length) => {
   var result = "";
   var characters =
@@ -196,6 +202,37 @@ const getAllUser = async (filter, sorting, pagination, ctx) => {
       .allowDiskUse(true);
 
     return data[0];
+  } catch (error) {
+    throw new GraphQLError(
+      `Maaf terjadi kesalahan, hubungi administrator! ${error}`,
+      {
+        extensions: {
+          code: "BAD_REQUEST",
+          http: {
+            status: 400,
+          },
+        },
+      }
+    );
+  }
+};
+
+const GetOneUser = async (filter, sorting, pagination, ctx) => {
+  try {
+    if (!_id) {
+      throw new GraphQLError(`wajib masukan _id, ${error}`, {
+        extensions: { code: "BAD_REQUEST", http: { status: 400 } },
+      });
+    }
+
+    let user = await UserModel.findOne({ _id: _id });
+    if (!user) {
+      throw new GraphQLError(`user tidak ditemukan, ${error}`, {
+        extensions: { code: "BAD_REQUEST", http: { status: 400 } },
+      });
+    }
+
+    return user
   } catch (error) {
     throw new GraphQLError(
       `Maaf terjadi kesalahan, hubungi administrator! ${error}`,
@@ -536,5 +573,6 @@ module.exports = {
   login,
   getAllUser,
   editUser,
-  logout
+  logout,
+  GetOneUser
 };

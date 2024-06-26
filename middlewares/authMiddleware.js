@@ -58,5 +58,8 @@ module.exports = {
     Mutation: {
         CreateUser: auth,
         UpdateUser: auth,
+        CreateKategoriCuti: auth,
+        UpdateKategoriCuti: auth,
+        DeleteKategoriCuti: auth,
     }
 }

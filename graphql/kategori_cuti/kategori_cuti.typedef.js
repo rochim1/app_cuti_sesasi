@@ -22,8 +22,6 @@ const kategoriCutiTypeDefs = `
 
     sugested_day_off: Int
     allow_half_day: Boolean
-    allow_exceed: Boolean
-    number_of_exceed: Int
     keterangan: String
     delegated_to_all: Boolean
     need_upload_file: Boolean
@@ -51,8 +49,6 @@ const kategoriCutiTypeDefs = `
 
     sugested_day_off: Int
     allow_half_day: Boolean
-    allow_exceed: Boolean
-    number_of_exceed: Int
     keterangan: String
     delegated_to_all: Boolean
     need_upload_file: Boolean
@@ -89,7 +85,7 @@ const kategoriCutiTypeDefs = `
 }
 
   type GettingKategoriCuti {
-    kategoriCuti: [KategoriCuti]
+    data: [KategoriCuti]
     info_page: [countPages]
   }
 
@@ -99,10 +95,7 @@ const kategoriCutiTypeDefs = `
   
   type Query {
     GetOneKategoriCuti(_id: ID!): KategoriCuti
-    SelectAllKategoriCuti(filter: filterKategriCuti, sorting: SortingKategoriCti): getIds
     GetAllKategoriCuti(filter: filterKategriCuti, sorting: SortingKategoriCti): GettingKategoriCuti
-    GetAllKategoriCutiResponsible(filter: filterKategriCuti, sorting: SortingKategoriCti): GettingKategoriCuti
-    CheckAvaliableKategoriCutiName(nama_kategori_cuti: String, exception_ids: [ID] ): Boolean
   }
 
   type Mutation {
@@ -110,7 +103,6 @@ const kategoriCutiTypeDefs = `
     UpdateKategoriCuti(_id: ID!, input: KategoriCutiInput): KategoriCuti
     DeleteKategoriCuti(_id: ID!): KategoriCuti
     ForceDeleteKategoriCuti(_id: ID!): BooleanResponse
-    ExportKateogriCuti(input: exportKategoriCutiInput): ExportResult
   }
 `;
 
