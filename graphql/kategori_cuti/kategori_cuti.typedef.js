@@ -57,6 +57,7 @@ const kategoriCutiTypeDefs = `
 
     status: StatusKategoriCuti
 
+    allow_exceed_annually: Boolean
     allow_min_gap: Boolean
     min_gap_before_cuti: Int
 

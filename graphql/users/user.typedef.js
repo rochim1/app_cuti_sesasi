@@ -53,7 +53,7 @@ const typeDef = `
 
     enum statusUser{
         active
-        resign
+        pending
         deleted
     }
 
@@ -253,9 +253,11 @@ const typeDef = `
 
     extend type Mutation {
         CreateUser(input: UserInput): User
+        CreateUserByAdmin(input: UserInput): User
         UpdateUser(id_user: ID, input: UserInput): User
         Login(input: LoginInput): Authentication
         Logout: BooleanResponse
+        ConfirmUser(id_user: ID): User
     }
 `;
 

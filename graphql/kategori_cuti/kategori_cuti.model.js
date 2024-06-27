@@ -37,6 +37,10 @@ const kategoriCutiSchema = new Schema({
     enum: [ 'active', 'inactive', 'deleted' ],
     default: 'active'
   },
+  allow_exceed_annually: {
+    type: Boolean,
+    default: false
+  },
   deleted_at: { type: String }
 }, {
   timestamps: true

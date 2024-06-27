@@ -8,15 +8,26 @@ const cutiBillings = new Schema({
   },
   tahun: String,
   sisa_cuti: Number,
-  taken_annually: Number,
-  taken_not_annually: Number,
+  taken_annually: Number, // berbayar
+  taken_not_annually: Number, // tidak berbayar
   total_taken: Number,
   carried_cuti: Number,
   exp_cuti: Number,
-  instansi_id: {
-    type: Schema.Types.ObjectId,
-    ref: "instansi",
-  },
+  edit_log: [
+    {
+      tanggal_edit: String,
+      user_editor: {
+        type: Schema.Types.ObjectId,
+        ref: "user",
+      },
+      tipe: {
+        type: String,
+        enum: ['pengurangan', 'penambahan']
+      },
+      number: Number,
+      balance: Number
+    }
+  ],
   status: {
     type: String,
     enum: [ 'active', 'inactive', 'deleted' ],

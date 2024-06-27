@@ -20,12 +20,18 @@ const cutiSchema = new Schema({
   },
   status_izin: {
     type: String,
-    enum: ['diterima', 'ditolak', 'diajukan']
+    enum: ['diterima', 'ditolak', 'diajukan', 'dibatalkan'],
+    default: "diajukan"
   },
   tanggal_aksi: {
     type: String,
     default: ''
   },
+  detail_hari: [
+    {
+      tanggal: String
+    }
+  ],
   aktor_aksi: {
     type: Schema.Types.ObjectId,
     ref: "user",
@@ -48,6 +54,12 @@ const cutiSchema = new Schema({
     enum: ['active', 'deleted'],
     default: 'active'
   },
+  reduce_annually: {
+    type: Boolean,
+    default: true
+  },
+  paid_covered_days: Number,
+  unpaid_days: Number,
   deleted_at: { type: String }
 }, {
   timestamps: true

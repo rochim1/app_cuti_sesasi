@@ -54,12 +54,17 @@ const auth = async (res, parent, args, ctx) => {
 module.exports = {
     Query: {
         GetAllUser: auth,
+        GetOneCuti: auth,
     },
     Mutation: {
-        CreateUser: auth,
+        CreateUserByAdmin: auth,
         UpdateUser: auth,
         CreateKategoriCuti: auth,
         UpdateKategoriCuti: auth,
         DeleteKategoriCuti: auth,
+        CreateCuti: auth,
+        Logout: auth,
+        UpdateCuti: auth,
+        DeleteCuti: auth,
     }
 }

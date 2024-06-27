@@ -16,45 +16,46 @@ const cutiTypeDefs = `
         deleted_at: String
         tipe_cuti: String
         filename: String
+        paid_covered_days: Int
+        unpaid_days: Int
     }
 
-    enum tipeCuti {
-        izin_sakit
-        izin_cuti_tahunan
-        izin_urusan_keluarga
-        izin_kehamilan
-        lainnya
-    }
     enum EnumAksi {
         diterima
         ditolak
         diajukan
+        dibatalkan
     }
 
     input CutiInput {
-        cuti_id: ID
-        tipe_cuti: tipeCuti
+        tipe_cuti: ID
         alasan: String
-        status_izin: EnumAksi
         tanggal_aksi: String 
         tanggal_izin: String
         tanggal_masuk: String
-        terhitung_hari: String
+        terhitung_hari: Int
+        reduce_annually: Boolean
+
+        aksi: EnumAksi
     }
 
     input FilterAllCuti {
-        detail_cuti: Boolean
+        user_id: ID
         kalender: String
     }
 
     type gettingCuti {
-        cuti: [Cuti]
+        data: [Cuti]
         info_page: [countPages]
     }
 
     type ResponseUpdateDelete {
         is_successed: Boolean
         message: String
+    }
+    
+    input inputAcceptCuti {
+        aksi: EnumAksi
     }
 
     extend type Query {
@@ -66,6 +67,7 @@ const cutiTypeDefs = `
         CreateCuti(input: CutiInput, file: Upload): Cuti
         UpdateCuti(cuti_id: ID!, input: CutiInput, file: Upload): Cuti
         DeleteCuti(cuti_id: ID!): Cuti
+        GiveActionForCuti(_id: ID, input: inputAcceptCuti): Cuti
     }
 `
 module.exports = cutiTypeDefs;

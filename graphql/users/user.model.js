@@ -88,8 +88,8 @@ const userSchema = new Schema({
   }],
   status: {
     type: String,
-    enum: ['active', 'deleted', 'resign'],
-    default: 'active'
+    enum: ['active', 'deleted', 'pending'],
+    default: 'pending'
   },
   employ_status: {
     type: String,

@@ -26,6 +26,21 @@ const CreateUser = async (parent, { input }, ctx) => {
   }
 };
 
+const CreateUserByAdmin = async (parent, { input }, ctx) => {
+  try {
+    return await UserUtilities.createUserByAdmin(input, ctx);
+  } catch (error) {
+    throw new GraphQLError(`Error, ${error}`, {
+      extensions: {
+        code: "INTERNAL_SERVER_ERROR",
+        http: {
+          status: 500,
+        },
+      },
+    });
+  }
+};
+
 const Login = async (parent, { input }, ctx) => {
   try {
     let loginData = await UserUtilities.login(input, ctx);
@@ -57,9 +72,24 @@ const GetOneUser = async (parent, { _id }, ctx) => {
   }
 };
 
+const ConfirmUser = async (parent, { id_user }, ctx) => {
+  try {
+    return await UserUtilities.confirmUser(id_user, ctx)
+  } catch (error) {
+    throw new GraphQLError(`Error, ${error}`, {
+      extensions: {
+        code: "INTERNAL_SERVER_ERROR",
+        http: {
+          status: 500,
+        },
+      },
+    });
+  }
+};
+
 const Logout = async (parent, args, ctx) => {
   try {
-    await UserUtilities.logout(ctx);
+    return await UserUtilities.logout(ctx);
   } catch (error) {
     throw new GraphQLError(`Error, ${error}`, {
       extensions: {
@@ -111,6 +141,8 @@ module.exports = {
     CreateUser,
     Login,
     UpdateUser,
-    Logout
+    Logout,
+    CreateUserByAdmin,
+    ConfirmUser
   },
 };

@@ -11,7 +11,8 @@ const ResetPasswordProgress = async (req, res) => {
 
     await UserModel.findOneAndUpdate(
         {
-            _id: checkToken._id
+            _id: checkToken._id,
+            status: "active"
         },
         {
             $set: {
