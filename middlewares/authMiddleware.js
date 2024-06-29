@@ -55,6 +55,7 @@ module.exports = {
     Query: {
         GetAllUser: auth,
         GetOneCuti: auth,
+        GetAllCuti: auth,
     },
     Mutation: {
         CreateUserByAdmin: auth,

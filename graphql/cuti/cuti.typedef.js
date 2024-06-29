@@ -16,8 +16,7 @@ const cutiTypeDefs = `
         deleted_at: String
         tipe_cuti: String
         filename: String
-        paid_covered_days: Int
-        unpaid_days: Int
+        verifikator_comment: String
     }
 
     enum EnumAksi {
@@ -56,6 +55,7 @@ const cutiTypeDefs = `
     
     input inputAcceptCuti {
         aksi: EnumAksi
+        verifikator_comment: String
     }
 
     extend type Query {

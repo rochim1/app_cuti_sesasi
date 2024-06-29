@@ -3,6 +3,14 @@ const jwt = require('jsonwebtoken');
 
 const auth = async (req, res, next) => {
     try{
+        if (!req.header('Authorization')) {
+            return res.status(403).send({
+                status: false,
+                error_code: 403,
+                message: 'Anda belum login'
+            })
+        }
+
         const token = req.header('Authorization').replace('Bearer ', '');
         const verify = jwt.verify(token, process.env.TOKEN_SECRET)
         const user = await UserModel.findOne({email: verify.email, status: 'active'})
@@ -12,6 +20,8 @@ const auth = async (req, res, next) => {
                 message: 'Pengguna tidak diizinkan, proses dibatalkan'
             })
         }
+        
+        console.log(user)
         req.user = user
         next()
     }catch(e){

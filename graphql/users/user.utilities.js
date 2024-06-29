@@ -559,7 +559,7 @@ const login = async (input) => {
           status: "active",
         };
       }
-
+      
       user = await UserModel.findOne(findQuery);
     }
 

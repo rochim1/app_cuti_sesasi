@@ -60,7 +60,8 @@ const cutiSchema = new Schema({
   },
   paid_covered_days: Number,
   unpaid_days: Number,
-  deleted_at: { type: String }
+  deleted_at: { type: String },
+  verifikator_comment: String
 }, {
   timestamps: true
 })
